@@ -31,23 +31,20 @@ public class GridManagerMonoBehaviour : GridPropertiesMonoBehaviour
     public void UpdateGrid(Vector2Int coordinates)
     {
         Ship currentShip = CurrentShip.GetComponent<Ship>();
-        if (currentShip.isVertical)
+        if (ValidateGridCells(coordinates, currentShip))
         {
-            if (ValidateGridCells(coordinates, currentShip))
+            if (currentShip.isVertical)
             {
                 for (int i = 0; i < currentShip.length; i++)
                 {
                     cells[coordinates.x + i, coordinates.y].shipTypeOccupancy = currentShip.ship;
                 }
             }
-        }
-        else
-        {
-            if (ValidateGridCells(coordinates, currentShip))
+            else 
             {
                 for (int i = 0; i < currentShip.length; i++)
                 {
-                    cells[coordinates.x + i, coordinates.y].shipTypeOccupancy = currentShip.ship;
+                    cells[coordinates.x, coordinates.y+i].shipTypeOccupancy = currentShip.ship;
                 }
             }
         }

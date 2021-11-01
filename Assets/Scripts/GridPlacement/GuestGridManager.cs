@@ -4,13 +4,8 @@ using UnityEngine;
 
 public class GuestGridManager : GridManagerMonoBehaviour
 {
-
     void Start()
     {
         tiles = CreateBoard();
     }
-    
-    
-
-    
 }
