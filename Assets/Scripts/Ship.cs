@@ -9,12 +9,7 @@ public class Ship : MonoBehaviour
     public ShipType ship;
     public int length;
     public bool isVertical = true;
-
-    private void Awake()
-    {
-        gridManager = GetComponentInParent<GridManagerMonoBehaviour>();
-    }
-
+    
     private Dictionary<ShipType, int> shipLengthInfo = new Dictionary<ShipType, int>()
     {
         {ShipType.Cruiser, 3},
@@ -23,6 +18,10 @@ public class Ship : MonoBehaviour
         {ShipType.Destroyer, 2},
         {ShipType.Battleship, 4}
     };
+    private void Awake()
+    {
+        gridManager = GetComponentInParent<GridManagerMonoBehaviour>();
+    }
 
     private void OnMouseDown()
     {
