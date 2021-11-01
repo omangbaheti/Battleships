@@ -6,6 +6,6 @@ public class GuestGridManager : GridManagerMonoBehaviour
 {
     void Start()
     {
-        tiles = CreateBoard();
+        oceanTiles = CreateBoard();
     }
 }

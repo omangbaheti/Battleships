@@ -5,19 +5,18 @@ using UnityEngine.Events;
 public class Cell: MonoBehaviour
 {
     public Vector2Int CellCoords { get; set; }
-
-    public ShipType shipTypeOccupancy = ShipType.NULL;
+    public ShipType shipTypeOccupancy;
     private GridManagerMonoBehaviour gridManager;
 
     private void Awake()
     {
         gridManager = GetComponentInParent<GridManagerMonoBehaviour>();
+        shipTypeOccupancy = ShipType.NULL;
     }
 
     private void OnMouseDown()
     {
         gridManager.UpdateGrid(CellCoords);
-        SetShip(gridManager.CurrentShip.transform);
     }
 
     public void SetShip(Transform shipObject)

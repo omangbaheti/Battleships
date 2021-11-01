@@ -5,22 +5,10 @@ using UnityEngine;
 public class GridManagerMonoBehaviour : GridPropertiesMonoBehaviour
 { 
    [SerializeField] private GameObject tile;
-   public GameObject CurrentShip;
-   protected GameObject[,] tiles = new GameObject[Width, Height];
+   public GameObject CurrentShip = null;
+   protected GameObject[,] oceanTiles = new GameObject[Width, Height];
    protected Cell[,] cells = new Cell[Width, Height];
-   public GameObject[,] Tiles { get=> tiles;}
-
-   public void RotateShip()
-   {
-       Ship currentShip = CurrentShip.GetComponent<Ship>();
-       Debug.Log(currentShip.ship);
-       Quaternion shipRotation = CurrentShip.transform.rotation;
-       Vector3 finalRotation = new Vector3(shipRotation.x, Convert.ToInt32(currentShip.isVertical) * 90, shipRotation.z);
-       Quaternion finalRotationButItsAFuckingQuaternion=new Quaternion();
-       finalRotationButItsAFuckingQuaternion.eulerAngles = finalRotation;
-       CurrentShip.transform.rotation = finalRotationButItsAFuckingQuaternion;
-       currentShip.isVertical = !currentShip.isVertical;
-   }
+   public GameObject[,] Tiles { get=> oceanTiles;}
    
     protected GameObject[,] CreateBoard()
     {
@@ -38,51 +26,76 @@ public class GridManagerMonoBehaviour : GridPropertiesMonoBehaviour
         return tiles;
     }
     
-    
-    //NOTE TO SELF: NEED TO CLEAN THIS PIECE OF SHIT
-    public void UpdateGrid(Vector2Int coordinates)
+    public void RotateShip()
     {
         Ship currentShip = CurrentShip.GetComponent<Ship>();
-        if (ValidateGridCells(coordinates, currentShip))
+        Quaternion shipRotation = CurrentShip.transform.rotation;
+        Vector3 finalRotation = new Vector3(shipRotation.x, Convert.ToInt32(currentShip.isVertical) * 90, shipRotation.z);
+        currentShip.isVertical = !currentShip.isVertical;
+        ClearPreviousPositions(currentShip.shipType);
+        if (ValidateGridCells(currentShip.placedPosition, currentShip))
         {
-            if (currentShip.isVertical)
-            {
-                for (int i = 0; i < currentShip.length; i++)
-                {
-                    cells[coordinates.x + i, coordinates.y].shipTypeOccupancy = currentShip.ship;
-                }
-            }
-            else 
-            {
-                for (int i = 0; i < currentShip.length; i++)
-                {
-                    cells[coordinates.x, coordinates.y+i].shipTypeOccupancy = currentShip.ship;
-                }
-            }
-        }
-    }
-
-
-
-    protected bool ValidateGridCells(Vector2Int currentPosition, Ship currentShip)
-    {
-        if (currentShip.isVertical)
-        {
-            for (int i = 0; i < currentShip.length; i++)
-            {
-                if (cells[currentPosition.x + i, currentPosition.y].shipTypeOccupancy != ShipType.NULL)
-                    return false;
-            }
+            shipRotation.eulerAngles = finalRotation;
+            CurrentShip.transform.rotation = shipRotation;
+            UpdateGrid(currentShip.placedPosition);
         }
         else
         {
-            for (int i = 0; i < currentShip.length; i++)
+            currentShip.isVertical = !currentShip.isVertical;
+            currentShip.FlashColor(Color.red);
+            UpdateGrid(currentShip.placedPosition);
+        }
+        
+    }
+
+    public void UpdateGrid(Vector2Int coordinates)
+    {
+        if(CurrentShip == null)
+            return;
+        Ship currentShip = CurrentShip.GetComponent<Ship>();
+        int length = currentShip.shipLengthInfo[currentShip.shipType];
+        Vector2Int orientation = currentShip.orientationInfo[currentShip.isVertical];
+        ClearPreviousPositions(currentShip.shipType);
+        
+        if (ValidateGridCells(coordinates, currentShip))
+        {
+            for (int i = 0; i < length; i++)
             {
-                if (cells[currentPosition.x, currentPosition.y+i].shipTypeOccupancy != ShipType.NULL)
-                    return false;
+                cells[coordinates.x + i * orientation.x, coordinates.y + i * orientation.y].shipTypeOccupancy = currentShip.shipType;
             }
+            cells[coordinates.x, coordinates.y].SetShip(currentShip.transform);
+            currentShip.placedPosition = coordinates;
+        }
+        else
+        {
+            currentShip.FlashColor(Color.red);
+        }
+    }
+    
+    protected bool ValidateGridCells(Vector2Int currentPosition, Ship currentShip)
+    {
+        int length = currentShip.shipLengthInfo[currentShip.shipType];
+        Vector2Int orientation = currentShip.orientationInfo[currentShip.isVertical];
+        for (int i = 0; i < length; i++)
+        {
+            if (cells[currentPosition.x + i * orientation.x, currentPosition.y + i * orientation.y].shipTypeOccupancy != ShipType.NULL)
+                return false;
         }
         return true;
+    }
+
+    protected void ClearPreviousPositions(ShipType shipType)
+    {
+        for (int i = 0; i < Width; i++)
+        {
+            for (int j = 0; j < Height; j++)
+            {
+                if (cells[i, j].shipTypeOccupancy == shipType)
+                {
+                    cells[i, j].shipTypeOccupancy = ShipType.NULL;
+                }
+            }
+        }
     }
 
 }

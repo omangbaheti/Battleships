@@ -6,6 +6,6 @@ public class HostGridManager : GridManagerMonoBehaviour
 {
     void Start()
     {
-        tiles = CreateBoard();
+        oceanTiles = CreateBoard();
     }
 }
