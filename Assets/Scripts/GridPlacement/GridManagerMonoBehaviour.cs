@@ -9,6 +9,18 @@ public class GridManagerMonoBehaviour : GridPropertiesMonoBehaviour
    protected GameObject[,] tiles = new GameObject[Width, Height];
    protected Cell[,] cells = new Cell[Width, Height];
    public GameObject[,] Tiles { get=> tiles;}
+
+   public void RotateShip()
+   {
+       Ship currentShip = CurrentShip.GetComponent<Ship>();
+       Debug.Log(currentShip.ship);
+       Quaternion shipRotation = CurrentShip.transform.rotation;
+       Vector3 finalRotation = new Vector3(shipRotation.x, Convert.ToInt32(currentShip.isVertical) * 90, shipRotation.z);
+       Quaternion finalRotationButItsAFuckingQuaternion=new Quaternion();
+       finalRotationButItsAFuckingQuaternion.eulerAngles = finalRotation;
+       CurrentShip.transform.rotation = finalRotationButItsAFuckingQuaternion;
+       currentShip.isVertical = !currentShip.isVertical;
+   }
    
     protected GameObject[,] CreateBoard()
     {
