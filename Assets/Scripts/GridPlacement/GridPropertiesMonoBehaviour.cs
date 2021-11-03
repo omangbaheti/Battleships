@@ -32,6 +32,8 @@ public class GridPropertiesMonoBehaviour : MonoBehaviour
         z = Mathf.FloorToInt(worldPosition.z / cellSize);
         return new Vector2Int(x, z);
     }
+    
+    
 }
 
 

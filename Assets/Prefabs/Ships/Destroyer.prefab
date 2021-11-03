@@ -62,9 +62,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gridManager: {fileID: 0}
-  ship: 4
-  length: 2
   isVertical: 1
+  placedPosition: {x: 0, y: 0}
+  shipType: 4
 --- !u!1 &9177423328034940965
 GameObject:
   m_ObjectHideFlags: 0
@@ -92,7 +92,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9177423328034940965}
   m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 0.00254, z: 0.01438}
+  m_LocalPosition: {x: 0, y: 0.0025, z: 0.008}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1614839064896336999}

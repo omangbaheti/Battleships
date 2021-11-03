@@ -6,11 +6,12 @@ using UnityEngine.Serialization;
 
 public class Ship : MonoBehaviour
 {
-    public GridManagerMonoBehaviour gridManager;
-    public bool isVertical = true;
     public Vector2Int placedPosition;
-    [FormerlySerializedAs("ship")] public ShipType shipType;
+    public ShipType shipType;
+    public bool isVertical = true;
+    
     private Material[] allMaterials;
+    private GridManagerMonoBehaviour gridManager;
     private List<Color> allColors = new List<Color>();
     
     public Dictionary<bool, Vector2Int> orientationInfo = new Dictionary<bool, Vector2Int>()

@@ -23,13 +23,7 @@ public class Cell: MonoBehaviour
     {
         shipObject.position = transform.position;
     }
-
-    public bool CanBuild()
-    {
-        if (shipTypeOccupancy == ShipType.NULL)
-            return true;
-        return false;
-    }
+    
     
 }
 
