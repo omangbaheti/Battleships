@@ -23,7 +23,7 @@ public class ManageRoom : MonoBehaviourPunCallbacks
             Destroy(this.gameObject);
             return;
         }
-
+        DontDestroyOnLoad(this);
         _instance = this;
     }
 
