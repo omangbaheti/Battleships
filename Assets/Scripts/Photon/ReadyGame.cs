@@ -1,23 +1,18 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using Photon.Pun;
 using UnityEngine;
 
 public class ReadyGame : MonoBehaviour
 {
-    private static GameObject hostGameBoard;
-    private static GameObject clientGameBoard;
-
+    [SerializeField] private Ship[] ships;
+    private bool isHostReady = false;
+    private bool isClientReady = false;
+    private GameObject hostGameBoard;
+    private GameObject clientGameBoard;
     private GameObject playerRole;
     private GameObject oppositePlayerRole;
-    [SerializeField] private Ship[] ships;
-
-    private readonly Dictionary<bool, GameObject> PlayerRoleInfo = new Dictionary<bool, GameObject>()
-    {
-        {true, hostGameBoard},
-        {false, clientGameBoard}
-    };
+    
+    
+    
 
     private void Awake()
     {
@@ -25,13 +20,20 @@ public class ReadyGame : MonoBehaviour
         hostGameBoard = GameObject.FindWithTag("HostGameBoard");
         clientGameBoard = GameObject.FindWithTag("ClientGameBoard");
         
-        playerRole = PlayerRoleInfo[isHost];
-        oppositePlayerRole = PlayerRoleInfo[!isHost];
+        playerRole = PlayerRoleInfo(true);
+        oppositePlayerRole = PlayerRoleInfo(false);
+
+        DisableRequiredGameBoard(oppositePlayerRole);
+    }
+
+    private void DisableRequiredGameBoard(GameObject gameBoard)
+    {
+        gameBoard.SetActive(false);
     }
 
     public void OnGameStart()
     {
-        if (ValidatePlacedShips())
+        if (ValidatePlacedShips() && isHostReady && isClientReady)
             PrepGame();
         else
             return;
@@ -39,12 +41,13 @@ public class ReadyGame : MonoBehaviour
 
     private void PrepGame()
      {
-         ships = oppositePlayerRole.transform.GetComponentsInChildren<Ship>();
-         foreach (Ship ship in ships)
+         for (int i = 0; i < 7; i++)
          {
-             Destroy(ship.gameObject);
+             Destroy(oppositePlayerRole.transform.GetChild(i).gameObject);
          }
          oppositePlayerRole.SetActive(true);
+         playerRole.SetActive(false
+         );
      }
      
      private bool ValidatePlacedShips()
@@ -56,6 +59,14 @@ public class ReadyGame : MonoBehaviour
                  return false;
          }
          return true;
+     }
+
+     private GameObject PlayerRoleInfo(bool isHost)
+     {
+         if (isHost)
+             return hostGameBoard;
+         return clientGameBoard;
+
      }
     
 }

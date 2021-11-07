@@ -61,9 +61,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ccb8c393943eabe42ab5fd9ac5b6775a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gridManager: {fileID: 0}
-  ship: 2
-  length: 3
+  placedPosition: {x: 0, y: 0}
+  shipType: 2
   isVertical: 1
 --- !u!1 &9015160807289601980
 GameObject:
