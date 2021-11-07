@@ -36,11 +36,6 @@ MonoBehaviour:
   RpcList:
   - ClickRpc
   - DestroyRpc
-  - DestroySpaceship
-  - Fire
-  - RespawnSpaceship
-  - FetchClientBoardInfo
-  - FetchHostBoardInfo
   - SendClientCells
   - SendHostCells
   - SetClientReady

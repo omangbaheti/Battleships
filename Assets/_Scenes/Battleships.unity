@@ -445,6 +445,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CurrentShip: {fileID: 0}
   photonView: {fileID: 0}
+  Hit: {fileID: 2100000, guid: a17863a79435d1e4499a653bf63a6032, type: 2}
+  Miss: {fileID: 2100000, guid: cee24a81bb886104fa7cc8a3e3d17685, type: 2}
   tile: {fileID: 2286326241669421051, guid: 4f604837400b23f49ba357c581c6812c, type: 3}
 --- !u!4 &626329473
 Transform:
@@ -1213,6 +1215,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CurrentShip: {fileID: 0}
   photonView: {fileID: 0}
+  Hit: {fileID: 2100000, guid: a17863a79435d1e4499a653bf63a6032, type: 2}
+  Miss: {fileID: 2100000, guid: cee24a81bb886104fa7cc8a3e3d17685, type: 2}
   tile: {fileID: 2286326241669421051, guid: 4f604837400b23f49ba357c581c6812c, type: 3}
 --- !u!1 &1226321090
 GameObject:

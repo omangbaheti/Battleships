@@ -8,10 +8,16 @@ public class GridManagerMonoBehaviour : GridPropertiesMonoBehaviour
     public GameObject CurrentShip = null; 
     public Cell[,] cells = new Cell[Width, Height];
     public PhotonView photonView;
+    
+    protected GameObject[,] oceanTiles = new GameObject[Width, Height];
+
+    public Material Hit;
+    public Material Miss;
+    
+    
     [SerializeField] private GameObject tile; 
     
     public GameObject[,] Tiles { get=> oceanTiles;}
-    protected GameObject[,] oceanTiles = new GameObject[Width, Height];
 
     private void Awake()
     {
@@ -63,6 +69,11 @@ public class GridManagerMonoBehaviour : GridPropertiesMonoBehaviour
        {
            currentShip.FlashColor(Color.red);
        }
+    }
+
+    public void DestroyCell(Vector2Int coordinates)
+    {
+        cells[coordinates.x, coordinates.y].shipTypeOccupancy = ShipType.NULL;
     }
    
     protected GameObject[,] CreateBoard()
