@@ -10,8 +10,8 @@ public class ReadyGame : MonoBehaviour
     [SerializeField] private Ship[] ships;
     [SerializeField] private UnityEvent SyncHostCells;
     [SerializeField] private UnityEvent SyncClientCells;
-    private bool isHostReady = false;
-    private bool isClientReady = false;
+    [SerializeField] private UnityEvent SetHostReady;
+    [SerializeField] private UnityEvent SetClientReady;
     private GameObject hostGameBoard;
     private GameObject clientGameBoard;
     private GameObject playerRole;
@@ -37,6 +37,11 @@ public class ReadyGame : MonoBehaviour
 
     public void OnGameStart()
     {
+        if(isHost)
+            SetHostReady.Invoke();
+        else
+            SetClientReady.Invoke();
+        
         if (ValidatePlacedShips() && HostGridManager.isHostReady && GuestGridManager.isClientReady)
             PrepGame();
     }

@@ -444,6 +444,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CurrentShip: {fileID: 0}
+  photonView: {fileID: 0}
   tile: {fileID: 2286326241669421051, guid: 4f604837400b23f49ba357c581c6812c, type: 3}
 --- !u!4 &626329473
 Transform:
@@ -611,7 +612,68 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fdd66054e788f1147a90c245007379a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isHost: 0
   ships: []
+  SyncHostCells:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1222131650}
+        m_TargetAssemblyTypeName: HostGridManager, Assembly-CSharp
+        m_MethodName: SyncHostCells
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  SyncClientCells:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 626329472}
+        m_TargetAssemblyTypeName: GuestGridManager, Assembly-CSharp
+        m_MethodName: SyncClientCells
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  SetHostReady:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1222131650}
+        m_TargetAssemblyTypeName: HostGridManager, Assembly-CSharp
+        m_MethodName: SendHostReadySignal
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  SetClientReady:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 626329472}
+        m_TargetAssemblyTypeName: GuestGridManager, Assembly-CSharp
+        m_MethodName: SendClientReadySignal
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &792195369
 GameObject:
   m_ObjectHideFlags: 0
@@ -1150,6 +1212,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CurrentShip: {fileID: 0}
+  photonView: {fileID: 0}
   tile: {fileID: 2286326241669421051, guid: 4f604837400b23f49ba357c581c6812c, type: 3}
 --- !u!1 &1226321090
 GameObject:
