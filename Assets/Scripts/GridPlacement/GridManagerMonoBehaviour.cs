@@ -1,62 +1,69 @@
 using System;   
 using System.Collections.Generic;
+using Photon.Pun;
 using UnityEngine;
 
 public class GridManagerMonoBehaviour : GridPropertiesMonoBehaviour
 { 
     public GameObject CurrentShip = null; 
-    protected GameObject[,] oceanTiles = new GameObject[Width, Height]; 
-    protected Cell[,] cells = new Cell[Width, Height];
-   
-   [SerializeField] private GameObject tile; 
-   public GameObject[,] Tiles { get=> oceanTiles;}
+    public Cell[,] cells = new Cell[Width, Height];
+    public PhotonView photonView;
+    [SerializeField] private GameObject tile; 
+    
+    public GameObject[,] Tiles { get=> oceanTiles;}
+    protected GameObject[,] oceanTiles = new GameObject[Width, Height];
 
-       public void RotateShip()
+    private void Awake()
+    {
+        photonView = GetComponent<PhotonView>();
+    }
+
+    public void RotateShip()
+    {
+       Ship currentShip = CurrentShip.GetComponent<Ship>();
+       Quaternion shipRotation = CurrentShip.transform.rotation;
+       Vector3 finalRotation = new Vector3(shipRotation.x, Convert.ToInt32(currentShip.isVertical) * 90, shipRotation.z);
+       currentShip.isVertical = !currentShip.isVertical;
+       ClearPreviousPositions(currentShip.shipType);
+       
+       if (ValidateGridCells(currentShip.placedPosition, currentShip))
        {
-           Ship currentShip = CurrentShip.GetComponent<Ship>();
-           Quaternion shipRotation = CurrentShip.transform.rotation;
-           Vector3 finalRotation = new Vector3(shipRotation.x, Convert.ToInt32(currentShip.isVertical) * 90, shipRotation.z);
+           shipRotation.eulerAngles = finalRotation;
+           CurrentShip.transform.rotation = shipRotation;
+           UpdateGrid(currentShip.placedPosition);
+       }
+       else
+       {
            currentShip.isVertical = !currentShip.isVertical;
-           ClearPreviousPositions(currentShip.shipType);
-           
-           if (ValidateGridCells(currentShip.placedPosition, currentShip))
-           {
-               shipRotation.eulerAngles = finalRotation;
-               CurrentShip.transform.rotation = shipRotation;
-               UpdateGrid(currentShip.placedPosition);
-           }
-           else
-           {
-               currentShip.isVertical = !currentShip.isVertical;
-               currentShip.FlashColor(Color.red);
-               UpdateGrid(currentShip.placedPosition);
-           }
-           
+           currentShip.FlashColor(Color.red);
+           UpdateGrid(currentShip.placedPosition);
        }
-   
-       public void UpdateGrid(Vector2Int coordinates)
+       
+    }
+
+    public void UpdateGrid(Vector2Int coordinates)
+    {
+       if(CurrentShip == null)
+           return;
+       Ship currentShip = CurrentShip.GetComponent<Ship>();
+       int length = currentShip.shipLengthInfo[currentShip.shipType];
+       Vector2Int orientation = currentShip.orientationInfo[currentShip.isVertical];
+       ClearPreviousPositions(currentShip.shipType);
+       
+       if (ValidateGridCells(coordinates, currentShip))
        {
-           if(CurrentShip == null)
-               return;
-           Ship currentShip = CurrentShip.GetComponent<Ship>();
-           int length = currentShip.shipLengthInfo[currentShip.shipType];
-           Vector2Int orientation = currentShip.orientationInfo[currentShip.isVertical];
-           ClearPreviousPositions(currentShip.shipType);
-           
-           if (ValidateGridCells(coordinates, currentShip))
+           for (int i = 0; i < length; i++)
            {
-               for (int i = 0; i < length; i++)
-               {
-                   cells[coordinates.x + i * orientation.x, coordinates.y + i * orientation.y].shipTypeOccupancy = currentShip.shipType;
-               }
-               cells[coordinates.x, coordinates.y].SetShip(currentShip.transform);
-               currentShip.placedPosition = coordinates;
+               cells[coordinates.x + i * orientation.x, coordinates.y + i * orientation.y].shipTypeOccupancy = currentShip.shipType;
            }
-           else
-           {
-               currentShip.FlashColor(Color.red);
-           }
+           cells[coordinates.x, coordinates.y].SetShip(currentShip.transform);
+           currentShip.placedPosition = coordinates;
        }
+       else
+       {
+           currentShip.FlashColor(Color.red);
+       }
+    }
    
     protected GameObject[,] CreateBoard()
     {

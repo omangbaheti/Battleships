@@ -1,22 +1,26 @@
+using System;
 using Photon.Pun;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class ReadyGame : MonoBehaviour
 {
+    public bool isHost;
+    
     [SerializeField] private Ship[] ships;
+    [SerializeField] private UnityEvent SyncHostCells;
+    [SerializeField] private UnityEvent SyncClientCells;
     private bool isHostReady = false;
     private bool isClientReady = false;
     private GameObject hostGameBoard;
     private GameObject clientGameBoard;
     private GameObject playerRole;
     private GameObject oppositePlayerRole;
+    private Cell[,] receiveCellsInfo;
     
-    
-    
-
     private void Awake()
     {
-        bool isHost = PhotonNetwork.IsMasterClient;
+        isHost = PhotonNetwork.IsMasterClient;
         hostGameBoard = GameObject.FindWithTag("HostGameBoard");
         clientGameBoard = GameObject.FindWithTag("ClientGameBoard");
         
@@ -33,10 +37,8 @@ public class ReadyGame : MonoBehaviour
 
     public void OnGameStart()
     {
-        if (ValidatePlacedShips() && isHostReady && isClientReady)
+        if (ValidatePlacedShips() && HostGridManager.isHostReady && GuestGridManager.isClientReady)
             PrepGame();
-        else
-            return;
     }
 
     private void PrepGame()
@@ -45,9 +47,18 @@ public class ReadyGame : MonoBehaviour
          {
              Destroy(oppositePlayerRole.transform.GetChild(i).gameObject);
          }
+
          oppositePlayerRole.SetActive(true);
-         playerRole.SetActive(false
-         );
+         playerRole.SetActive(true);
+
+         if (isHost)
+         {
+             SyncHostCells.Invoke();
+         }
+         else
+         {
+             SyncClientCells.Invoke();
+         }
      }
      
      private bool ValidatePlacedShips()
@@ -68,5 +79,17 @@ public class ReadyGame : MonoBehaviour
          return clientGameBoard;
 
      }
+
+     private void PlayerReady()
+     {
+         
+     }
+     
+     bool SetPlayerReady()
+     {
+         return true;
+     }
+
+     
     
 }
