@@ -20,8 +20,8 @@ public class ReadyGame : MonoBehaviour
         hostGameBoard = GameObject.FindWithTag("HostGameBoard");
         clientGameBoard = GameObject.FindWithTag("ClientGameBoard");
         
-        playerRole = PlayerRoleInfo(true);
-        oppositePlayerRole = PlayerRoleInfo(false);
+        playerRole = PlayerRoleInfo(isHost);
+        oppositePlayerRole = PlayerRoleInfo(!isHost);
 
         DisableRequiredGameBoard(oppositePlayerRole);
     }
