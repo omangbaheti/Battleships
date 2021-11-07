@@ -12,6 +12,7 @@ public class ReadyGame : MonoBehaviour
     [SerializeField] private UnityEvent SyncClientCells;
     [SerializeField] private UnityEvent SetHostReady;
     [SerializeField] private UnityEvent SetClientReady;
+    
     private GameObject hostGameBoard;
     private GameObject clientGameBoard;
     private GameObject playerRole;
@@ -29,12 +30,7 @@ public class ReadyGame : MonoBehaviour
 
         DisableRequiredGameBoard(oppositePlayerRole);
     }
-
-    private void DisableRequiredGameBoard(GameObject gameBoard)
-    {
-        gameBoard.SetActive(false);
-    }
-
+    
     public void OnGameStart()
     {
         if(isHost)
@@ -45,7 +41,12 @@ public class ReadyGame : MonoBehaviour
         if (ValidatePlacedShips() && HostGridManager.isHostReady && GuestGridManager.isClientReady)
             PrepGame();
     }
-
+    
+    private void DisableRequiredGameBoard(GameObject gameBoard)
+    {
+        gameBoard.SetActive(false);
+    }
+    
     private void PrepGame()
      {
          for (int i = 0; i < 7; i++)
@@ -84,17 +85,5 @@ public class ReadyGame : MonoBehaviour
          return clientGameBoard;
 
      }
-
-     private void PlayerReady()
-     {
-         
-     }
-     
-     bool SetPlayerReady()
-     {
-         return true;
-     }
-
-     
-    
+   
 }

@@ -21,13 +21,13 @@ public class HostGridManager : GridManagerMonoBehaviour
     }
     
     [PunRPC]
-    void SendHostCells(Cell[,] receivedCells)
+    private void SendHostCells(Cell[,] receivedCells)
     {
         cells = receivedCells;
     }
 
     [PunRPC]
-    void SetHostReady()
+    private void SetHostReady()
     {
         isHostReady = true;
     }

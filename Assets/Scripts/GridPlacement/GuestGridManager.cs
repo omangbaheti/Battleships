@@ -20,13 +20,13 @@ public class GuestGridManager : GridManagerMonoBehaviour
     }
     
     [PunRPC]
-    void SendClientCells(Cell[,] receivedCells)
+    private void SendClientCells(Cell[,] receivedCells)
     {
         cells = receivedCells;
     }
     
     [PunRPC]
-    void SetClientReady()
+    private void SetClientReady()
     {
         isClientReady = true;
     }

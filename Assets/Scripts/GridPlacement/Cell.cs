@@ -7,7 +7,11 @@ public class Cell: MonoBehaviour
     public Vector2Int CellCoords { get; set; }
     public ShipType shipTypeOccupancy;
     private GridManagerMonoBehaviour gridManager;
-
+    
+    public void SetShip(Transform shipObject)
+    {
+        shipObject.position = transform.position;
+    }
     private void Awake()
     {
         gridManager = GetComponentInParent<GridManagerMonoBehaviour>();
@@ -19,12 +23,6 @@ public class Cell: MonoBehaviour
         gridManager.UpdateGrid(CellCoords);
     }
 
-    public void SetShip(Transform shipObject)
-    {
-        shipObject.position = transform.position;
-    }
-    
-    
 }
 
 public enum ShipType
