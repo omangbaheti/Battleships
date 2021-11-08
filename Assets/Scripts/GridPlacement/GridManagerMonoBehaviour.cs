@@ -120,12 +120,14 @@ public class GridManagerMonoBehaviour : GridPropertiesMonoBehaviour
 
     protected void OnCellsReceived(bool isVertical, int x, int y, int shipType)
     {
+        Debug.Log("Am I getting till here?");
         int length = Ship.shipLengthInfo[(ShipType)shipType];
         Vector2Int orientation = Ship.orientationInfo[isVertical];
         for (int i = 0; i < length; i++) 
         {
             cells[x + i * orientation.x, y + i * orientation.y].shipTypeOccupancy = (ShipType)shipType;
         }
+        Debug.Log("Or maybe even here?");
     }
 
 }

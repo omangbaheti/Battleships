@@ -1,4 +1,5 @@
 using Photon.Pun;
+using UnityEngine;
 
 public class GuestGridManager : GridManagerMonoBehaviour
 {
@@ -30,7 +31,12 @@ public class GuestGridManager : GridManagerMonoBehaviour
     [PunRPC]
     private void SendClientCells(bool isVertical, int placedPositionX, int placedPositionY, int shipType)
     {
-        OnCellsReceived(isVertical, placedPositionX, placedPositionY, shipType);
+        int length = Ship.shipLengthInfo[(ShipType)shipType];
+        Vector2Int orientation = Ship.orientationInfo[isVertical];
+        for (int i = 0; i < length; i++) 
+        {
+            cells[placedPositionX + i * orientation.x, placedPositionY + i * orientation.y].shipTypeOccupancy = (ShipType)shipType;
+        }
     }
     
     [PunRPC]

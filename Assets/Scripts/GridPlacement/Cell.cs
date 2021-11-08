@@ -6,9 +6,10 @@ public class Cell: MonoBehaviour
 {
     public Vector2Int CellCoords { get; set; }
     public ShipType shipTypeOccupancy;
-    
+    public static Action OnGameReady;
     private GridManagerMonoBehaviour gridManager;
     private Action<Vector2Int> onCellClick;
+    private bool guessed;
 
     public void SetShip(Transform shipObject)
     {
@@ -21,12 +22,17 @@ public class Cell: MonoBehaviour
         onCellClick += gridManager.UpdateGrid; 
     }
 
+    private void OnEnable()
+    {
+        OnGameReady += ChangeCellFunctionality;
+    }
+
     private void OnMouseDown()
     {
         onCellClick(CellCoords);
     }
 
-    private void OnGameReady()
+    private void ChangeCellFunctionality()
     {
         onCellClick -= gridManager.UpdateGrid;
         onCellClick += CheckCellOccupancy;
@@ -34,7 +40,9 @@ public class Cell: MonoBehaviour
 
     private void CheckCellOccupancy(Vector2Int coordinates)
     {
-        Debug.Log("Click");
+        Debug.Log("Click on Cell");
+        if(guessed)
+            return;
         if (shipTypeOccupancy == ShipType.NULL)
         {
             GetComponent<Renderer>().material = gridManager.Miss;
@@ -44,6 +52,12 @@ public class Cell: MonoBehaviour
             GetComponent<Renderer>().material = gridManager.Hit;
             gridManager.DestroyCell(coordinates);
         }
+        guessed = true;
+    }
+    
+    private void OnDisable()
+    {
+        OnGameReady -= ChangeCellFunctionality;
     }
 
 }

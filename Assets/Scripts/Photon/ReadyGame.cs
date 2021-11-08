@@ -24,36 +24,42 @@ public class ReadyGame : MonoBehaviour
         isHost = PhotonNetwork.IsMasterClient;
         hostGameBoard = GameObject.FindWithTag("HostGameBoard");
         clientGameBoard = GameObject.FindWithTag("ClientGameBoard");
-        
+
+    }
+
+    private void Start()
+    {
         playerRole = PlayerRoleInfo(isHost);
         oppositePlayerRole = PlayerRoleInfo(!isHost);
-
-        DisableRequiredGameBoard(oppositePlayerRole);
+        SetBoardChildrenActive(oppositePlayerRole, false);
     }
-    
+
     public void OnGameStart()
     {
         if (ValidatePlacedShips())
         {
             if (isHost)
+            {
                 SyncHostCells.Invoke();
-            else
-                SyncClientCells.Invoke();
-            
-            if (HostGridManager.isHostReady && GuestGridManager.isClientReady)
-                PrepGame();
+                SetHostReady.Invoke();
+            }
             else
             {
-                Debug.Log(HostGridManager.isHostReady);
-                Debug.Log(GuestGridManager.isClientReady);
+                SyncClientCells.Invoke();
+                SetClientReady.Invoke();
             }
+            if (HostGridManager.isHostReady && GuestGridManager.isClientReady)
+                PrepGame();
         }
 
     }
     
-    private void DisableRequiredGameBoard(GameObject gameBoard)
+    private void SetBoardChildrenActive(GameObject gameBoard, bool activate)
     {
-        gameBoard.SetActive(false);
+        foreach (Transform transform in gameBoard.transform)
+        {
+            transform.gameObject.SetActive(activate);
+        }
     }
     
     private void PrepGame()
@@ -63,13 +69,11 @@ public class ReadyGame : MonoBehaviour
              Destroy(oppositePlayerRole.transform.GetChild(i).gameObject);
          }
 
-         oppositePlayerRole.SetActive(true);
-         playerRole.SetActive(true);
-
-
-         
-         oppositePlayerRole.SetActive(true);
-         playerRole.SetActive(false);
+         Cell.OnGameReady.Invoke();
+         SetBoardChildrenActive(oppositePlayerRole, true);
+         SetBoardChildrenActive(playerRole, false);
+         PhotonView photonView = oppositePlayerRole.GetPhotonView();
+         photonView.RequestOwnership();
      }
      
      private bool ValidatePlacedShips()
