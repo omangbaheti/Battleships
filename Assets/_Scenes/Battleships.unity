@@ -447,6 +447,12 @@ MonoBehaviour:
   photonView: {fileID: 0}
   Hit: {fileID: 2100000, guid: a17863a79435d1e4499a653bf63a6032, type: 2}
   Miss: {fileID: 2100000, guid: cee24a81bb886104fa7cc8a3e3d17685, type: 2}
+  ships:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   tile: {fileID: 2286326241669421051, guid: 4f604837400b23f49ba357c581c6812c, type: 3}
 --- !u!4 &626329473
 Transform:
@@ -858,7 +864,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 626329472}
         m_TargetAssemblyTypeName: GridManagerMonoBehaviour, Assembly-CSharp
         m_MethodName: RotateShip
         m_Mode: 1
@@ -1217,6 +1223,12 @@ MonoBehaviour:
   photonView: {fileID: 0}
   Hit: {fileID: 2100000, guid: a17863a79435d1e4499a653bf63a6032, type: 2}
   Miss: {fileID: 2100000, guid: cee24a81bb886104fa7cc8a3e3d17685, type: 2}
+  ships:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   tile: {fileID: 2286326241669421051, guid: 4f604837400b23f49ba357c581c6812c, type: 3}
 --- !u!1 &1226321090
 GameObject:

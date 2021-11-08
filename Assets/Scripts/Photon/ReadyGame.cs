@@ -33,13 +33,22 @@ public class ReadyGame : MonoBehaviour
     
     public void OnGameStart()
     {
-        if(isHost)
-            SetHostReady.Invoke();
-        else
-            SetClientReady.Invoke();
-        
-        if (ValidatePlacedShips() && HostGridManager.isHostReady && GuestGridManager.isClientReady)
-            PrepGame();
+        if (ValidatePlacedShips())
+        {
+            if (isHost)
+                SyncHostCells.Invoke();
+            else
+                SyncClientCells.Invoke();
+            
+            if (HostGridManager.isHostReady && GuestGridManager.isClientReady)
+                PrepGame();
+            else
+            {
+                Debug.Log(HostGridManager.isHostReady);
+                Debug.Log(GuestGridManager.isClientReady);
+            }
+        }
+
     }
     
     private void DisableRequiredGameBoard(GameObject gameBoard)
@@ -57,14 +66,10 @@ public class ReadyGame : MonoBehaviour
          oppositePlayerRole.SetActive(true);
          playerRole.SetActive(true);
 
-         if (isHost)
-         {
-             SyncHostCells.Invoke();
-         }
-         else
-         {
-             SyncClientCells.Invoke();
-         }
+
+         
+         oppositePlayerRole.SetActive(true);
+         playerRole.SetActive(false);
      }
      
      private bool ValidatePlacedShips()

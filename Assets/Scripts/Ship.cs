@@ -9,18 +9,18 @@ public class Ship : MonoBehaviour
     public Vector2Int placedPosition;
     public ShipType shipType;
     public bool isVertical = true;
-    
+
     private Material[] allMaterials;
     private GridManagerMonoBehaviour gridManager;
     private List<Color> allColors = new List<Color>();
     
-    public Dictionary<bool, Vector2Int> orientationInfo = new Dictionary<bool, Vector2Int>()
+    public static Dictionary<bool, Vector2Int> orientationInfo = new Dictionary<bool, Vector2Int>()
     {
         { false, new Vector2Int(1, 0) },
         { true, new Vector2Int(0, 1) }
     };
 
-    public Dictionary<ShipType, int> shipLengthInfo = new Dictionary<ShipType, int>()
+    public static Dictionary<ShipType, int> shipLengthInfo = new Dictionary<ShipType, int>()
     {
         {ShipType.Cruiser, 3},
         {ShipType.Submarine, 3},

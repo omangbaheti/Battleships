@@ -7,11 +7,19 @@ public class GuestGridManager : GridManagerMonoBehaviour
     void Start()
     {
         oceanTiles = CreateBoard();
+        ships = GetComponentsInChildren<Ship>();
     }
     
     public void SyncClientCells()
     {
-        photonView.RPC("SendClientCells", RpcTarget.Others, cells);
+        foreach (Ship ship in ships)
+        {
+            bool isVertical = ship.isVertical;
+            int placedPositionX = ship.placedPosition.x;
+            int placedPositionY = ship.placedPosition.y;
+            int shipType = (int)ship.shipType;
+            photonView.RPC("SendHostCells", RpcTarget.Others,isVertical, placedPositionX, placedPositionY, shipType);
+        }
     }
 
     public void SendClientReadySignal()
@@ -20,9 +28,9 @@ public class GuestGridManager : GridManagerMonoBehaviour
     }
     
     [PunRPC]
-    private void SendClientCells(Cell[,] receivedCells)
+    private void SendClientCells(bool isVertical, int placedPositionX, int placedPositionY, int shipType)
     {
-        cells = receivedCells;
+        OnCellsReceived(isVertical, placedPositionX, placedPositionY, shipType);
     }
     
     [PunRPC]

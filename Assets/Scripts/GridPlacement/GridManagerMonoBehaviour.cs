@@ -8,12 +8,12 @@ public class GridManagerMonoBehaviour : GridPropertiesMonoBehaviour
     public GameObject CurrentShip = null; 
     public Cell[,] cells = new Cell[Width, Height];
     public PhotonView photonView;
-    
-    protected GameObject[,] oceanTiles = new GameObject[Width, Height];
-
     public Material Hit;
     public Material Miss;
+    public Ship[] ships = new Ship[5];
     
+    protected GameObject[,] oceanTiles = new GameObject[Width, Height];
+    protected int placedShips = 0;
     
     [SerializeField] private GameObject tile; 
     
@@ -52,8 +52,8 @@ public class GridManagerMonoBehaviour : GridPropertiesMonoBehaviour
        if(CurrentShip == null)
            return;
        Ship currentShip = CurrentShip.GetComponent<Ship>();
-       int length = currentShip.shipLengthInfo[currentShip.shipType];
-       Vector2Int orientation = currentShip.orientationInfo[currentShip.isVertical];
+       int length = Ship.shipLengthInfo[currentShip.shipType];
+       Vector2Int orientation = Ship.orientationInfo[currentShip.isVertical];
        ClearPreviousPositions(currentShip.shipType);
        
        if (ValidateGridCells(coordinates, currentShip))
@@ -85,7 +85,7 @@ public class GridManagerMonoBehaviour : GridPropertiesMonoBehaviour
             {
                 Vector3 instantiatingPosition = new Vector3(Width * CellSize * i, 0f, Height * CellSize * j);
                 tiles[i,j] = Instantiate(tile,instantiatingPosition, Quaternion.identity, transform);
-                cells[i, j] = tiles[i, j].GetComponent<Cell>();
+                cells[i,j] = tiles[i, j].GetComponent<Cell>();
                 cells[i,j].CellCoords = new Vector2Int(i, j);
             }
         }
@@ -94,8 +94,8 @@ public class GridManagerMonoBehaviour : GridPropertiesMonoBehaviour
     
     protected bool ValidateGridCells(Vector2Int currentPosition, Ship currentShip)
     {
-        int length = currentShip.shipLengthInfo[currentShip.shipType];
-        Vector2Int orientation = currentShip.orientationInfo[currentShip.isVertical];
+        int length = Ship.shipLengthInfo[currentShip.shipType];
+        Vector2Int orientation = Ship.orientationInfo[currentShip.isVertical];
         for (int i = 0; i < length; i++)
         {
             if (cells[currentPosition.x + i * orientation.x, currentPosition.y + i * orientation.y].shipTypeOccupancy != ShipType.NULL)
@@ -115,6 +115,16 @@ public class GridManagerMonoBehaviour : GridPropertiesMonoBehaviour
                     cells[i, j].shipTypeOccupancy = ShipType.NULL;
                 }
             }
+        }
+    }
+
+    protected void OnCellsReceived(bool isVertical, int x, int y, int shipType)
+    {
+        int length = Ship.shipLengthInfo[(ShipType)shipType];
+        Vector2Int orientation = Ship.orientationInfo[isVertical];
+        for (int i = 0; i < length; i++) 
+        {
+            cells[x + i * orientation.x, y + i * orientation.y].shipTypeOccupancy = (ShipType)shipType;
         }
     }
 

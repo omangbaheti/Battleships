@@ -18,7 +18,7 @@ public class Cell: MonoBehaviour
     {
         gridManager = GetComponentInParent<GridManagerMonoBehaviour>();
         shipTypeOccupancy = ShipType.NULL;
-        onCellClick += CheckCellOccupancy;
+        onCellClick += gridManager.UpdateGrid; 
     }
 
     private void OnMouseDown()
@@ -51,9 +51,9 @@ public class Cell: MonoBehaviour
 public enum ShipType
 {
     NULL=-1,
-    Carrier,
-    Submarine,
-    Cruiser,
-    Battleship,
-    Destroyer,
+    Carrier = 0,
+    Submarine = 1,
+    Cruiser = 2,
+    Battleship = 3,
+    Destroyer = 4
 }
