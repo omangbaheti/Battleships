@@ -18,8 +18,6 @@ public class ReadyGame : MonoBehaviour
     private GameObject playerRole;
     private GameObject oppositePlayerRole;
     private Cell[,] receiveCellsInfo;
-    private PhotonView oppositePlayerPhotonView;
-    private PhotonView playerPhotonView;
     private void Awake()
     {
         isHost = PhotonNetwork.IsMasterClient;
@@ -67,7 +65,8 @@ public class ReadyGame : MonoBehaviour
      {
          for (int i = 0; i < 7; i++)
          {
-             Destroy(oppositePlayerRole.transform.GetChild(i).gameObject);
+             if(oppositePlayerRole.transform.GetChild(i).gameObject.CompareTag("Destructibles"))
+                Destroy(oppositePlayerRole.transform.GetChild(i).gameObject);
          }
 
          Cell.OnGameReady.Invoke();
