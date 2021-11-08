@@ -27,7 +27,7 @@ public class HostGridManager : GridManagerMonoBehaviour
     
     public void SendHostReadySignal()
     {
-        photonView.RPC("SetHostReady", RpcTarget.Others);
+        photonView.RPC("SetHostReady", RpcTarget.All);
     }
     
     [PunRPC]

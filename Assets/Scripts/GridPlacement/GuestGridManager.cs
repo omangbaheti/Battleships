@@ -18,13 +18,13 @@ public class GuestGridManager : GridManagerMonoBehaviour
             int placedPositionX = ship.placedPosition.x;
             int placedPositionY = ship.placedPosition.y;
             int shipType = (int)ship.shipType;
-            photonView.RPC("SendHostCells", RpcTarget.Others,isVertical, placedPositionX, placedPositionY, shipType);
+            photonView.RPC("SendClientCells", RpcTarget.Others,isVertical, placedPositionX, placedPositionY, shipType);
         }
     }
 
     public void SendClientReadySignal()
     {
-        photonView.RPC("SetClientReady", RpcTarget.Others);
+        photonView.RPC("SetClientReady", RpcTarget.All);
     }
     
     [PunRPC]
