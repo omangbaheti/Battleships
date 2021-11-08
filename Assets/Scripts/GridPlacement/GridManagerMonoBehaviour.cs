@@ -22,6 +22,8 @@ public class GridManagerMonoBehaviour : GridPropertiesMonoBehaviour
     private void Awake()
     {
         photonView = GetComponent<PhotonView>();
+        oceanTiles = CreateBoard();
+        ships = GetComponentsInChildren<Ship>();
     }
 
     public void RotateShip()

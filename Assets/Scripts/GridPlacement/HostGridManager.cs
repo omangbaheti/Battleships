@@ -7,11 +7,6 @@ public class HostGridManager : GridManagerMonoBehaviour
 {
     public static bool isHostReady = false;
     
-    void Start()
-    {
-        oceanTiles = CreateBoard();
-        ships = GetComponentsInChildren<Ship>();
-    }
 
     public void SyncHostCells()
     {

@@ -4,13 +4,8 @@ using UnityEngine;
 public class GuestGridManager : GridManagerMonoBehaviour
 {
     
-    public static bool isClientReady = false; 
-    void Start()
-    {
-        oceanTiles = CreateBoard();
-        ships = GetComponentsInChildren<Ship>();
-    }
-    
+    public static bool isClientReady = false;
+
     public void SyncClientCells()
     {
         foreach (Ship ship in ships)

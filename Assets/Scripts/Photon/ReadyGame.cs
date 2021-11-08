@@ -18,7 +18,8 @@ public class ReadyGame : MonoBehaviour
     private GameObject playerRole;
     private GameObject oppositePlayerRole;
     private Cell[,] receiveCellsInfo;
-    
+    private PhotonView oppositePlayerPhotonView;
+    private PhotonView playerPhotonView;
     private void Awake()
     {
         isHost = PhotonNetwork.IsMasterClient;
