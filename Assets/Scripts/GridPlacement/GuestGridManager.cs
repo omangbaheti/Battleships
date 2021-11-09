@@ -5,6 +5,12 @@ public class GuestGridManager : GridManagerMonoBehaviour
 {
     
     public static bool isClientReady = false;
+    
+    
+    private void Start()
+    {
+        Initialize();
+    }
 
     public void SyncClientCells()
     {
@@ -22,6 +28,7 @@ public class GuestGridManager : GridManagerMonoBehaviour
     {
         photonView.RPC("SetClientReady", RpcTarget.All);
     }
+    
     
     [PunRPC]
     private void SendClientCells(bool isVertical, int placedPositionX, int placedPositionY, int shipType)

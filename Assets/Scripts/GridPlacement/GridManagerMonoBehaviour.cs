@@ -1,6 +1,7 @@
 using System;   
 using System.Collections.Generic;
 using Photon.Pun;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class GridManagerMonoBehaviour : GridPropertiesMonoBehaviour
@@ -12,14 +13,17 @@ public class GridManagerMonoBehaviour : GridPropertiesMonoBehaviour
     public Material Miss;
     public Ship[] ships = new Ship[5];
     public static int placedShips = 0;
+    public static bool isHostTurn;
+    
     protected GameObject[,] oceanTiles = new GameObject[Width, Height];
     
 
     [SerializeField] private GameObject tile; 
     
     public GameObject[,] Tiles { get=> oceanTiles;}
+    
 
-    private void Awake()
+    public void Initialize()
     {
         photonView = GetComponent<PhotonView>();
         oceanTiles = CreateBoard();
@@ -144,5 +148,17 @@ public class GridManagerMonoBehaviour : GridPropertiesMonoBehaviour
             cells[x + i * orientation.x, y + i * orientation.y].shipTypeOccupancy = (ShipType)shipType;
         }
     }
+    
+    [PunRPC]
+    protected void SwitchTurn(bool turn)
+    {
+        Debug.Log($"Host:{PhotonNetwork.IsMasterClient} Turn:{isHostTurn}");
+        foreach (Transform childTransform in transform)
+        {
+            childTransform.gameObject.SetActive(turn);
+        }
+        isHostTurn = turn;
+    }
+    
 
 }

@@ -53,16 +53,7 @@ public class ManageRoom : MonoBehaviourPunCallbacks
         base.OnCreatedRoom();
         StartCoroutine(LoadAsynchronously("BattleShips"));
     }
-
-    public override void OnPlayerEnteredRoom(Player newPlayer)
-    {
-        
-    }
     
-    public override void OnPlayerLeftRoom(Player otherPlayer)
-    {
-        
-    }
     
     private IEnumerator LoadAsynchronously(string scene)
     {
@@ -73,8 +64,4 @@ public class ManageRoom : MonoBehaviourPunCallbacks
 
     }
 
-    public override void OnJoinRoomFailed(short returnCode, string message)
-    {
-        
-    }
 }

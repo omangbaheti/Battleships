@@ -1,4 +1,5 @@
 using System;
+using Photon.Pun;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -7,6 +8,7 @@ public class Cell: MonoBehaviour
     public Vector2Int CellCoords { get; set; }
     public ShipType shipTypeOccupancy;
     public static Action OnGameReady;
+    
     private GridManagerMonoBehaviour gridManager;
     private Action<Vector2Int> onCellClick;
     private bool guessed;
@@ -41,6 +43,8 @@ public class Cell: MonoBehaviour
 
     private void CheckCellOccupancy(Vector2Int coordinates)
     {
+        if (!(GridManagerMonoBehaviour.isHostTurn && PhotonNetwork.IsMasterClient))
+            return;
         if(guessed)
             return;
         if (shipTypeOccupancy == ShipType.NULL)

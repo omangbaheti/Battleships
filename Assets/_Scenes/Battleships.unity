@@ -465,6 +465,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  myTurn: 0
   tile: {fileID: 2286326241669421051, guid: 4f604837400b23f49ba357c581c6812c, type: 3}
 --- !u!4 &626329473
 Transform:
@@ -500,6 +501,7 @@ GameObject:
   - component: {fileID: 716131438}
   - component: {fileID: 716131437}
   - component: {fileID: 716131440}
+  - component: {fileID: 716131441}
   m_Layer: 0
   m_Name: NextButton
   m_TagString: Untagged
@@ -694,6 +696,19 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &716131441
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 716131435}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ff47ed73c0676041874ac90e300a898, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isHost: 0
 --- !u!1 &792195369
 GameObject:
   m_ObjectHideFlags: 0
@@ -940,7 +955,7 @@ GameObject:
   - component: {fileID: 1117168290}
   m_Layer: 0
   m_Name: Canvas
-  m_TagString: Untagged
+  m_TagString: Destructibles
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1241,6 +1256,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  myTurn: 0
   tile: {fileID: 2286326241669421051, guid: 4f604837400b23f49ba357c581c6812c, type: 3}
 --- !u!1 &1226321090
 GameObject:
@@ -1634,7 +1650,7 @@ GameObject:
   - component: {fileID: 2051789292}
   m_Layer: 0
   m_Name: Canvas
-  m_TagString: Untagged
+  m_TagString: Destructibles
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

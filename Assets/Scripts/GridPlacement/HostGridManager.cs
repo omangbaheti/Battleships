@@ -6,7 +6,12 @@ using UnityEngine;
 public class HostGridManager : GridManagerMonoBehaviour
 {
     public static bool isHostReady = false;
-    
+
+    private void Start()
+    {
+        Initialize();
+        isHostTurn = true;
+    }
 
     public void SyncHostCells()
     {
@@ -26,6 +31,7 @@ public class HostGridManager : GridManagerMonoBehaviour
         photonView.RPC("SetHostReady", RpcTarget.All);
     }
     
+    
     [PunRPC]
     private void SendHostCells(bool isVertical, int placedPositionX, int placedPositionY, int shipType)
     {
@@ -38,4 +44,6 @@ public class HostGridManager : GridManagerMonoBehaviour
         Debug.Log("SetHostReady");
         isHostReady = true;
     }
+    
+
 }
