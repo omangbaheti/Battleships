@@ -12,6 +12,7 @@ public class GridManagerMonoBehaviour : GridPropertiesMonoBehaviour
     public Material Hit;
     public Material Miss;
     public Ship[] ships = new Ship[5];
+    public GameObject VictoryBanner;
     public static int placedShips = 0;
     public static bool isHostTurn;
     
@@ -155,6 +156,19 @@ public class GridManagerMonoBehaviour : GridPropertiesMonoBehaviour
         }
     }
 
+    public void DidIWin()
+    {
+        for (int i = 0; i < Width; i++)
+        {
+            for (int j = 0; j < Height; j++)
+            {
+                if (cells[i, j].shipTypeOccupancy != ShipType.NULL)
+                    return;
+            }
+        }
+        photonView.RPC("VictoryRPC", RpcTarget.All);
+    }
+
     [PunRPC]
     protected void UpdatingGuessedPositions(int x, int y)
     {
@@ -171,6 +185,11 @@ public class GridManagerMonoBehaviour : GridPropertiesMonoBehaviour
         }
         oceanTiles[x,y].SetActive(false);
     }
-    
 
+    [PunRPC]
+    protected void VictoryRPC()
+    {
+        
+    }
+    
 }

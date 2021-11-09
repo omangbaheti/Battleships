@@ -59,6 +59,7 @@ public class Cell: MonoBehaviour
             }
             gridManager.photonView.RPC("UpdatingGuessedPositions", RpcTarget.Others, coordinates.x, coordinates.y);
             StartCoroutine(DelayedSwitchTurn());
+            gridManager.DidIWin();
             guessed = true;
         }
     }
