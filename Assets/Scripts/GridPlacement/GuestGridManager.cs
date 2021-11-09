@@ -37,6 +37,7 @@ public class GuestGridManager : GridManagerMonoBehaviour
     [PunRPC]
     private void SetClientReady()
     {
+        Debug.Log("SetClientReady");
         isClientReady = true;
     }
 }

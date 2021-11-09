@@ -11,10 +11,10 @@ public class GridManagerMonoBehaviour : GridPropertiesMonoBehaviour
     public Material Hit;
     public Material Miss;
     public Ship[] ships = new Ship[5];
+    public static int placedShips = 5;
     
     protected GameObject[,] oceanTiles = new GameObject[Width, Height];
-    protected int placedShips = 0;
-    
+
     [SerializeField] private GameObject tile; 
     
     public GameObject[,] Tiles { get=> oceanTiles;}
@@ -66,6 +66,20 @@ public class GridManagerMonoBehaviour : GridPropertiesMonoBehaviour
            }
            cells[coordinates.x, coordinates.y].SetShip(currentShip.transform);
            currentShip.placedPosition = coordinates;
+           
+           if(currentShip.isPlaced == false) 
+               placedShips--;
+           else
+               currentShip.isPlaced = true;
+
+           if (placedShips <= 0)
+           {
+               if(PhotonNetwork.IsMasterClient)
+                   photonView.RPC("SetHostReady", RpcTarget.All);
+               else
+                   photonView.RPC("SetClientReady", RpcTarget.All);
+           }
+           
        }
        else
        {
@@ -122,14 +136,12 @@ public class GridManagerMonoBehaviour : GridPropertiesMonoBehaviour
 
     protected void OnCellsReceived(bool isVertical, int x, int y, int shipType)
     {
-        Debug.Log("Am I getting till here?");
         int length = Ship.shipLengthInfo[(ShipType)shipType];
         Vector2Int orientation = Ship.orientationInfo[isVertical];
         for (int i = 0; i < length; i++) 
         {
             cells[x + i * orientation.x, y + i * orientation.y].shipTypeOccupancy = (ShipType)shipType;
         }
-        Debug.Log("Or maybe even here?");
     }
 
 }

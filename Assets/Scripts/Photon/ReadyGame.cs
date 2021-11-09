@@ -35,6 +35,7 @@ public class ReadyGame : MonoBehaviour
 
     public void OnGameStart()
     {
+        Debug.Log(GridManagerMonoBehaviour.placedShips);
         if (ValidatePlacedShips())
         {
             if (isHost)
@@ -78,13 +79,7 @@ public class ReadyGame : MonoBehaviour
      
      private bool ValidatePlacedShips()
      {
-         ships = playerRole.transform.GetComponentsInChildren<Ship>();
-         foreach (Ship ship in ships)
-         {
-             if (ship.placedPosition == Vector2Int.zero)
-                 return false;
-         }
-         return true;
+         return GridManagerMonoBehaviour.placedShips < 5;
      }
 
      private GameObject PlayerRoleInfo(bool isHost)

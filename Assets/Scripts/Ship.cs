@@ -9,6 +9,7 @@ public class Ship : MonoBehaviour
     public Vector2Int placedPosition;
     public ShipType shipType;
     public bool isVertical = true;
+    public bool isPlaced = false;
 
     private Material[] allMaterials;
     private GridManagerMonoBehaviour gridManager;

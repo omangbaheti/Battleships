@@ -35,6 +35,7 @@ public class HostGridManager : GridManagerMonoBehaviour
     [PunRPC]
     private void SetHostReady()
     {
+        Debug.Log("SetHostReady");
         isHostReady = true;
     }
 }
