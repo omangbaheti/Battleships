@@ -25,6 +25,7 @@ public class Cell: MonoBehaviour
     private void OnEnable()
     {
         OnGameReady += ChangeCellFunctionality;
+        
     }
 
     private void OnMouseDown()
@@ -40,7 +41,6 @@ public class Cell: MonoBehaviour
 
     private void CheckCellOccupancy(Vector2Int coordinates)
     {
-        Debug.Log("Click on Cell");
         if(guessed)
             return;
         if (shipTypeOccupancy == ShipType.NULL)

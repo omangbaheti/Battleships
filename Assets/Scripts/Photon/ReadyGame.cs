@@ -35,7 +35,6 @@ public class ReadyGame : MonoBehaviour
 
     public void OnGameStart()
     {
-        Debug.Log(GridManagerMonoBehaviour.placedShips);
         if (ValidatePlacedShips())
         {
             if (isHost)
@@ -48,6 +47,7 @@ public class ReadyGame : MonoBehaviour
                 SyncClientCells.Invoke();
                 SetClientReady.Invoke();
             }
+            
             if (HostGridManager.isHostReady && GuestGridManager.isClientReady)
                 PrepGame();
         }
@@ -70,16 +70,16 @@ public class ReadyGame : MonoBehaviour
                 Destroy(oppositePlayerRole.transform.GetChild(i).gameObject);
          }
 
-         Cell.OnGameReady.Invoke();
          SetBoardChildrenActive(oppositePlayerRole, true);
          SetBoardChildrenActive(playerRole, false);
+         Cell.OnGameReady.Invoke();
          PhotonView photonView = oppositePlayerRole.GetPhotonView();
          photonView.RequestOwnership();
      }
      
      private bool ValidatePlacedShips()
      {
-         return GridManagerMonoBehaviour.placedShips < 5;
+         return GridManagerMonoBehaviour.placedShips >= 5;
      }
 
      private GameObject PlayerRoleInfo(bool isHost)
