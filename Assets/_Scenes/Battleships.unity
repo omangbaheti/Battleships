@@ -465,7 +465,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  VictoryBanner: {fileID: 1714652201732574304, guid: fa4403bb65cfa134ba38c56587f0edab, type: 3}
+  VictoryBanner: {fileID: 8242802701084782105, guid: badbc6cae4cd4b54cb69c679816e29df, type: 3}
   guessedPositions: []
   tile: {fileID: 2286326241669421051, guid: 4f604837400b23f49ba357c581c6812c, type: 3}
 --- !u!4 &626329473
@@ -1257,7 +1257,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  VictoryBanner: {fileID: 8242802701084782105, guid: badbc6cae4cd4b54cb69c679816e29df, type: 3}
+  VictoryBanner: {fileID: 1714652201732574304, guid: fa4403bb65cfa134ba38c56587f0edab, type: 3}
   guessedPositions: []
   tile: {fileID: 2286326241669421051, guid: 4f604837400b23f49ba357c581c6812c, type: 3}
 --- !u!1 &1226321090

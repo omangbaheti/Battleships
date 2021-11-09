@@ -1,4 +1,5 @@
-using System;   
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Photon.Pun;
@@ -189,7 +190,14 @@ public class GridManagerMonoBehaviour : GridPropertiesMonoBehaviour
     [PunRPC]
     protected void VictoryRPC()
     {
+        StartCoroutine(VictoryCoroutine());
+    }
+    
+    protected IEnumerator VictoryCoroutine()
+    {
         Instantiate(VictoryBanner, transform);
+        yield return new WaitForSeconds(2f);
+        PhotonNetwork.LoadLevel("GameOver");
     }
     
 }
