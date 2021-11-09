@@ -189,7 +189,7 @@ public class GridManagerMonoBehaviour : GridPropertiesMonoBehaviour
     [PunRPC]
     protected void VictoryRPC()
     {
-        VictoryBanner.SetActive(true);
+        Instantiate(VictoryBanner, transform);
     }
     
 }
