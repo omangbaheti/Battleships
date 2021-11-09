@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using Photon.Pun;
 using UnityEngine;
 using UnityEngine.Events;
@@ -58,8 +59,8 @@ public class Cell: MonoBehaviour
                 gridManager.DestroyCell(coordinates);
             }
 
-            GridManagerMonoBehaviour.isHostTurn = !GridManagerMonoBehaviour.isHostTurn;
-            TurnHandler.SwitchTurnAction(GridManagerMonoBehaviour.isHostTurn);
+            StartCoroutine(DelayedSwitchTurn());
+            
             
             guessed = true;
         }
@@ -68,6 +69,13 @@ public class Cell: MonoBehaviour
     private void OnDisable()
     {
         OnGameReady -= ChangeCellFunctionality;
+    }
+
+    private IEnumerator DelayedSwitchTurn()
+    {
+        yield return new WaitForSeconds(.5f);
+        GridManagerMonoBehaviour.isHostTurn = !GridManagerMonoBehaviour.isHostTurn;
+        TurnHandler.SwitchTurnAction(GridManagerMonoBehaviour.isHostTurn);
     }
 
 }
