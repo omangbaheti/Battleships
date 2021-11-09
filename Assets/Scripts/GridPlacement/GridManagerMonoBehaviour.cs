@@ -1,13 +1,13 @@
 using System;   
 using System.Collections.Generic;
+using System.Linq;
 using Photon.Pun;
 using Unity.VisualScripting;
 using UnityEngine;
 
 public class GridManagerMonoBehaviour : GridPropertiesMonoBehaviour
 { 
-    public GameObject CurrentShip = null; 
-    public Cell[,] cells = new Cell[Width, Height];
+    public GameObject CurrentShip = null;
     public PhotonView photonView;
     public Material Hit;
     public Material Miss;
@@ -15,11 +15,11 @@ public class GridManagerMonoBehaviour : GridPropertiesMonoBehaviour
     public static int placedShips = 0;
     public static bool isHostTurn;
     
+    protected Cell[,] cells = new Cell[Width, Height];
     protected GameObject[,] oceanTiles = new GameObject[Width, Height];
-    
+    [SerializeField] protected List<Vector2Int> guessedPositions = new List<Vector2Int>();
 
-    [SerializeField] private GameObject tile; 
-    
+    [SerializeField] private GameObject tile;
     public GameObject[,] Tiles { get=> oceanTiles;}
     
     
@@ -154,8 +154,23 @@ public class GridManagerMonoBehaviour : GridPropertiesMonoBehaviour
             cells[x + i * orientation.x, y + i * orientation.y].shipTypeOccupancy = (ShipType)shipType;
         }
     }
-    
 
+    [PunRPC]
+    protected void UpdatingGuessedPositions(int x, int y)
+    {
+        guessedPositions.Add(new Vector2Int(x,y));
+        oceanTiles[x,y].gameObject.SetActive(true);
+        if (cells[x,y].shipTypeOccupancy == ShipType.NULL)
+        {
+            oceanTiles[x,y].GetComponent<Renderer>().material = Miss;
+        }
+        else
+        {
+            oceanTiles[x,y].GetComponent<Renderer>().material = Hit;
+            DestroyCell(new Vector2Int(x,y));
+        }
+        oceanTiles[x,y].SetActive(false);
+    }
     
 
 }

@@ -28,7 +28,6 @@ public class Cell: MonoBehaviour
     private void OnEnable()
     {
         OnGameReady += ChangeCellFunctionality;
-        
     }
 
     private void OnMouseDown()
@@ -58,10 +57,8 @@ public class Cell: MonoBehaviour
                 GetComponent<Renderer>().material = gridManager.Hit;
                 gridManager.DestroyCell(coordinates);
             }
-
+            gridManager.photonView.RPC("UpdatingGuessedPositions", RpcTarget.Others, coordinates.x, coordinates.y);
             StartCoroutine(DelayedSwitchTurn());
-            
-            
             guessed = true;
         }
     }
