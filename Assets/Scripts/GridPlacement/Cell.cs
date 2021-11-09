@@ -43,20 +43,26 @@ public class Cell: MonoBehaviour
 
     private void CheckCellOccupancy(Vector2Int coordinates)
     {
-        if (!(GridManagerMonoBehaviour.isHostTurn && PhotonNetwork.IsMasterClient))
-            return;
-        if(guessed)
-            return;
-        if (shipTypeOccupancy == ShipType.NULL)
+        if ((GridManagerMonoBehaviour.isHostTurn && PhotonNetwork.IsMasterClient) || (!GridManagerMonoBehaviour.isHostTurn && !PhotonNetwork.IsMasterClient))
         {
-            GetComponent<Renderer>().material = gridManager.Miss;
+
+            if (guessed)
+                return;
+            if (shipTypeOccupancy == ShipType.NULL)
+            {
+                GetComponent<Renderer>().material = gridManager.Miss;
+            }
+            else
+            {
+                GetComponent<Renderer>().material = gridManager.Hit;
+                gridManager.DestroyCell(coordinates);
+            }
+
+            GridManagerMonoBehaviour.isHostTurn = !GridManagerMonoBehaviour.isHostTurn;
+            TurnHandler.SwitchTurnAction(GridManagerMonoBehaviour.isHostTurn);
+            
+            guessed = true;
         }
-        else
-        {
-            GetComponent<Renderer>().material = gridManager.Hit;
-            gridManager.DestroyCell(coordinates);
-        }
-        guessed = true;
     }
     
     private void OnDisable()

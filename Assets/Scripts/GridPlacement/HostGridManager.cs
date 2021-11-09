@@ -7,12 +7,6 @@ public class HostGridManager : GridManagerMonoBehaviour
 {
     public static bool isHostReady = false;
 
-    private void Start()
-    {
-        Initialize();
-        isHostTurn = true;
-    }
-
     public void SyncHostCells()
     {
         foreach (Ship ship in ships)
@@ -45,5 +39,14 @@ public class HostGridManager : GridManagerMonoBehaviour
         isHostReady = true;
     }
     
+    [PunRPC]
+    protected void SwitchHostTurn(bool turn)
+    {
+        foreach (Transform childTransform in transform)
+        {
+            childTransform.gameObject.SetActive(!turn);
+        }
+        isHostTurn = turn;
+    }
 
 }

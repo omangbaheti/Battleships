@@ -22,6 +22,12 @@ public class GridManagerMonoBehaviour : GridPropertiesMonoBehaviour
     
     public GameObject[,] Tiles { get=> oceanTiles;}
     
+    
+    private void Awake()
+    {
+        Initialize();
+        isHostTurn = true;
+    }
 
     public void Initialize()
     {
@@ -149,16 +155,7 @@ public class GridManagerMonoBehaviour : GridPropertiesMonoBehaviour
         }
     }
     
-    [PunRPC]
-    protected void SwitchTurn(bool turn)
-    {
-        Debug.Log($"Host:{PhotonNetwork.IsMasterClient} Turn:{isHostTurn}");
-        foreach (Transform childTransform in transform)
-        {
-            childTransform.gameObject.SetActive(turn);
-        }
-        isHostTurn = turn;
-    }
+
     
 
 }

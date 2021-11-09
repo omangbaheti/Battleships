@@ -6,12 +6,6 @@ public class GuestGridManager : GridManagerMonoBehaviour
     
     public static bool isClientReady = false;
     
-    
-    private void Start()
-    {
-        Initialize();
-    }
-
     public void SyncClientCells()
     {
         foreach (Ship ship in ships)
@@ -46,5 +40,15 @@ public class GuestGridManager : GridManagerMonoBehaviour
     {
         Debug.Log("SetClientReady");
         isClientReady = true;
+    }
+    
+    [PunRPC]
+    protected void SwitchClientTurn(bool turn)
+    {
+        foreach (Transform childTransform in transform)
+        {
+            childTransform.gameObject.SetActive(turn);
+        }
+        isHostTurn = turn;
     }
 }

@@ -26,7 +26,8 @@ public class TurnHandler : PlayerBoardsHandler
 
     private void SwitchTurn(bool myTurn)
     {
-        
+        hostPhotonView.RPC("SwitchHostTurn", RpcTarget.All, myTurn);
+        clientPhotonView.RPC("SwitchClientTurn", RpcTarget.All, myTurn);
     }
     
 
