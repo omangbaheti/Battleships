@@ -196,7 +196,7 @@ public class GridManagerMonoBehaviour : GridPropertiesMonoBehaviour
     protected IEnumerator VictoryCoroutine()
     {
         Instantiate(VictoryBanner, transform);
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(10f);
         PhotonNetwork.LoadLevel("GameOver");
     }
     
