@@ -7,7 +7,8 @@ public class Ship : MonoBehaviour
     public ShipType shipType;
     public bool isVertical = true;
     public bool isPlaced = false;
-
+    public bool isGameReady = false;
+    
     private Material[] allMaterials;
     private GridManagerMonoBehaviour gridManager;
     private List<Color> allColors = new List<Color>();
@@ -41,6 +42,11 @@ public class Ship : MonoBehaviour
 
     private void OnMouseDown()
     {
+        if (isGameReady)
+        {
+            gridManager.CurrentShip = null;
+            return;
+        }
         gridManager.CurrentShip = gameObject;
     }
     

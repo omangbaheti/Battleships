@@ -46,6 +46,11 @@ public class ReadyGame : PlayerBoardsHandler
                 Destroy(oppositePlayerRole.transform.GetChild(i).gameObject);
          }
 
+         ships = FindObjectsOfType<Ship>();
+         foreach (Ship ship in ships)
+         {
+             ship.isGameReady = true;
+         }
          SetBoardChildrenActive(oppositePlayerRole, true);
          SetBoardChildrenActive(playerRole, false);
          Cell.OnGameReady.Invoke();
@@ -54,6 +59,5 @@ public class ReadyGame : PlayerBoardsHandler
      }
      
 
-     
    
 }
